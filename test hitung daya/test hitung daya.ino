@@ -4,38 +4,41 @@ PZEM004Tv30 pzem(14, 12);  // Menggunakan Hardware Serial 3 (RX-D6 -> TX-D5)
 
 void setup() {
    Serial.begin(9600);
+   
 }
 
 void loop() {
      float voltage = pzem.voltage();
+     Serial.println("Pembacaan Nilai Data Sensor");
+
      if(voltage != NAN){
-         Serial.print("Voltage: "); 
+         Serial.print("Tegangan : "); 
          Serial.print(voltage);
-         Serial.println("V");
+         Serial.println(" V");
      } else {
          Serial.println("Error reading voltage");
      }
 
      float current = pzem.current();
      if(current != NAN){
-         Serial.print("Current: ");
+         Serial.print("Arus : ");
          Serial.print(current);
-         Serial.println("A");
+         Serial.println(" A");
      } else {
          Serial.println("Error reading current");
      }
 
      float power = current * voltage;
-     Serial.print("Power: ");
+     Serial.print("Daya : ");
      Serial.print(power);
-     Serial.println("W");
+     Serial.println(" W");
      
 
      float energy = pzem.energy();
      if(current != NAN){
-         Serial.print("Energy: ");
+         Serial.print("Energi kwh: ");
          Serial.print(energy,3);
-         Serial.println("kWh");
+         Serial.println(" kWh");
      } else {
          Serial.println("Error reading energy");
      }

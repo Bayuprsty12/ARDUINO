@@ -101,7 +101,14 @@ void loop() {
 
     while(pzem.current()>0){
       Serial.println("Kirim Data ke Server");
+      
       status = 2;
+      voltage_sensor = pzem.voltage();
+      current_sensor = pzem.current();
+      power_sensor = voltage_sensor * current_sensor;
+      energy_sensor = pzem.energy();
+      
+      
       send_data(status, current_sensor, voltage_sensor, power_sensor, energy_sensor);
         //fungsi LED 5mm
         digitalWrite (led, HIGH); // Led Nyala
@@ -139,7 +146,7 @@ void send_data(int status, float current, float voltage, float power, float ener
   WiFiClient wificlient;
 
   HTTPClient http;
-  http.begin(wificlient,"http://192.168.59.249/monitoring_daya_listrik/config/restapi.php?function=insert_data_sensor");
+  http.begin(wificlient,"http://192.168.21.249/monitoring_daya_listrik/config/restapi.php?function=insert_data_sensor");
   http.addHeader("Content-Type", "application/x-www-form-urlencoded");
 
   auto httpCode = http.POST(post_data);
